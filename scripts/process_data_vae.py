@@ -11,7 +11,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from drive_data_new_oscar import DriveData
-from image_process import ImageProcess
 import gpu_options
 import yaml
 from tqdm import tqdm
@@ -55,10 +54,9 @@ class ProcessData:
         self.max_velocity = None
         
         self.data = DriveData(self.csv_path)
-        # self.image_process = ImageProcess()  
         
         self._prepare_data(balance_data=balance_data)
-        # self._build_datasets()              
+
         
     ###########################################################################
     #
@@ -381,8 +379,6 @@ def check_data(processed_data):
     x_test = test_data
     # y_test = test_data[-1]
     
-    image_process = ImageProcess()
-
     # Accessing a batch from train and test dataset
     for x_train, y_train in train_data.take(1):
         img_train = x_train[0].numpy()  # Separate image data (first element in x_train tuple)
@@ -393,10 +389,6 @@ def check_data(processed_data):
         img_test = x_test[0].numpy()  # Separate image data (first element in x_test tuple)
         # Numerical data: x_test[1] contains the numerical values
         test_batch_size = img_test.shape[0]
-
-    # Normalize images using ImageProcess class
-    img_train = image_process.norm_0_1(img_train)
-    img_test = image_process.norm_0_1(img_test)
 
     # Randomly select indices from the batch
     train_indices = np.random.randint(0, train_batch_size, 4)
@@ -528,5 +520,7 @@ if __name__ == '__main__':
         processed_data = ProcessData(data_path)
         if config['check_datasets'] == True:
             check_data(processed_data)
+        processed_data.build_datasets(augment=config['augment'])
+
     except KeyboardInterrupt:
         print ('\nShutdown requested. Exiting...')
