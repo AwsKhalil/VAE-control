@@ -13,9 +13,6 @@ data_path: "/home/aws/oscar/e2e_fusion_data/straight_zigzag/2024-09-17-16-59-42"
 # data_path: "/home/aws/oscar/e2e_fusion_data/smc3/2024-09-17-16-31-42"
 # data_path: "/home/aws/oscar/e2e_fusion_data/big_dataset/2023-10-18-18-50-06"
 
-# do you want the unet to concatenate flatten tensors ? or add the second input to the depth of the first?
-flat: 1
-
 ######################################################
 ## data collection - save full image
 
@@ -102,31 +99,13 @@ num_outputs: 2    # output: reconstructed image, steering angle, thr_brk
 
 
 ######################################################
-## neural networks (generator, descriminator) 
-
-# Generator Type ('UNet' or 'Attention_UNet' or 'Attention_ResUNet')
-# generator_type: 'UNet'
+## neural networks
 
 # # network structure
-# num_filters: 64 # number of filters for the first layer
-# filter_size: 4 # size of the convolutional filter
-# up_samp_size: 2 # size of upsampling filters
-# stride: 2
-# # batch_norm: True
-# dropout_rate: 0.3
 latent_dim: 20
 
 # learning rate
 # lr:  0.0002 # default of Adam is 0.001 
-# beta: 0.5
-
-# # other parameters
-# stddev: 0.02
-# alpha: 0.2
-# loss_weights_d: 0.5
-# loss_weights_gan_1: 1
-# loss_weights_gan_2: 100
-
 
 # training 
 # data_shuffle: True
@@ -136,33 +115,11 @@ early_stopping_patience: 3
 # tensorboard log dir
 tensorboard_log_dir: logs/
 
-
-
 beta_img: 0.5
 beta_steer: 0.1
 epochs: 50
 recon_loss: 'bce' # 'mse' or 'bce' or 'both'
 steer_loss: 'mse' # 'mse' or 'mae' or 'r_squared'
-lr:  0.001 # default of Adam is 0.001 
+lr:  0.001 # learning rate default of Adam is 0.001 
 
 
-######################################################
-## driving strategy - run_neural.py
-
-# max vel
-max_vel: 25
-# steering angle value for sharp turn
-sharp_turn_min: 0.25
-# when sharp turn, apply brake for this sec.
-brake_apply_sec: 1.7
-# brake value
-brake_val: 0.5
-# throttle at non sharp turn
-throttle_default: 1.0
-# throttle at sharp turn
-throttle_sharp_turn: 0.1
-# velocity threshold for not moving
-velocity_0: 0.03
-# scale factors
-scale_factor_throttle: 1
-scale_factor_steering: 1
