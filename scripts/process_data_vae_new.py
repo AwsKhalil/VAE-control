@@ -259,7 +259,7 @@ class ProcessData:
         #     # Always return all available data and assume we are reconstructing the input image.
         #     return (img, velocity, yaw_rate, heading), (img, steering, thr_brk)
         
-        # Access numerical values by indexing to avoid unpacking
+        # Access numerical values by indexing to avoid unpacking (unpacking causes an error)
         if config['in_prev_steer']:
             velocity = numerical_data[0]
             yaw_rate = numerical_data[1]
@@ -526,48 +526,6 @@ def build_filtered_dataset(dataset):
     filtered_dataset = dataset.map(filter_data, num_parallel_calls=tf.data.AUTOTUNE)
     return filtered_dataset
 
-
-# def build_filtered_dataset(dataset):
-    # filtered_inputs = []
-    # filtered_outputs = []
-
-    # for input_data, output_data in dataset:
-    #     if config['in_prev_steer']:
-    #         img, velocity, yaw_rate, heading, prev_steer = input_data
-    #     else:
-    #         img, velocity, yaw_rate, heading = input_data
-    #     steering, thr_brk = output_data
-
-    #     # Apply filters based on config
-    #     current_input = []
-    #     current_output = []
-
-    #     # Input configuration
-    #     if config['in_img']:
-    #         current_input.append(img)
-    #     if config['in_vel']:
-    #         current_input.append(velocity)
-    #     if config['in_yaw']:
-    #         current_input.append(yaw_rate)
-    #     if config['in_head']:
-    #         current_input.append(heading)
-    #     if config['in_prev_steer']:
-    #         current_input.append(prev_steer)
-
-    #     # Output configuration
-    #     if config['out_img']:
-    #         current_output.append(img)
-    #     if config['out_steer']:
-    #         current_output.append(steering)
-    #     if config['out_thr_brk']:
-    #         current_output.append(thr_brk)
-
-    #     # Append filtered input/output
-    #     filtered_inputs.append(tuple(current_input))
-    #     filtered_outputs.append(tuple(current_output))
-
-    # # Return the filtered dataset
-    # return filtered_inputs, filtered_outputs
 
 if __name__ == '__main__':
     
