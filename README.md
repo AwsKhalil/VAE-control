@@ -8,7 +8,7 @@ Collect data using OSCAR simulator.
 $ git clone https://github.com/awskhalil/oscar.git --recursive
 ```
 
-Once you have the drive data in a CSV file:
+Once you have the drive data in a CSV file, define the data_path in your `confi.yaml` file.
 
 You can test datasets creation using the file `test_create_datasets.py`.
 
