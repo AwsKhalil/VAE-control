@@ -31,7 +31,7 @@ import gpu_options
 # clear seesion if needed.
 # tf.compat.v1.keras.backend.clear_session()
 
-config_path = '/home/aws/latency_mitigaion_vae/2024/config/'
+config_path = 'config/'
 with open(config_path+'config.yaml') as file:
 # with open('config.yaml') as file:
     global config
