@@ -232,15 +232,9 @@ class ProcessData:
             img = np.expand_dims(img, axis=-1)
 
         return img.astype(np.float32)  # Cast to float32
+   
     ###########################################################################
     #
-    # def _parse_function(self, sample):
-    #     """Convert a sample (image path, velocity, etc.) into tensors."""
-    #     img_path, velocity, yaw_rate, heading, steering_ang, thr_brk = sample
-    #     img = tf.numpy_function(self._preprocess_image, [img_path], tf.float32)
-    #     img = tf.reshape(img, [config['input_image_height'], config['input_image_width'], config['input_image_depth']])
-    #     return (img, velocity, yaw_rate, heading), (steering_ang, thr_brk)
-
     def _parse_function(self, image_path, numerical_data):
         """Preprocess the image and return all available data."""
         img = tf.numpy_function(self._preprocess_image, [image_path], tf.float32)
