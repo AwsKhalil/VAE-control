@@ -1,0 +1,168 @@
+# !/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# """
+# Created on Wed Aug  3 14:27:49 2022
+
+# @author: aws
+# """
+
+
+# data path
+data_path: "/home/aws/oscar/e2e_fusion_data/straight_zigzag/2024-09-17-16-59-42"
+# data_path: "/home/aws/oscar/e2e_fusion_data/smc3/2024-09-17-16-31-42"
+# data_path: "/home/aws/oscar/e2e_fusion_data/big_dataset/2023-10-18-18-50-06"
+
+# do you want the unet to concatenate flatten tensors ? or add the second input to the depth of the first?
+flat: 1
+
+######################################################
+## data collection - save full image
+
+# driving simulator
+steering_angle_max: 450
+steering_angle_tolerance: 0.015 # around 7.5 degree
+
+
+# image cropping: True for legacy datasets. 
+#                 False for new datasets.
+crop: False
+# brake
+brake: True
+
+image_width: 800
+image_height: 800
+
+# vehicle name
+vehicle_name: fusion
+# camera image topic 
+camera_image_topic: /fusion/front_camera/image_raw
+# vehicle control topic name
+vehicle_control_topic: /fusion
+# p3d - current position and velocity
+base_pose_topic: /base_pose_ground_truth
+
+# maximum desired speed
+max_vel: 20
+
+
+######################################################
+## Datasets and training config
+
+# Data balancing:
+steering_data_balancing: True
+
+# Data augmentation:
+augment: True
+
+# inputs:
+in_img: True
+in_vel: True
+in_yaw: False
+in_head: False
+in_prev_steer: True
+
+# outputs:
+out_img: True # in case of image reconstruction
+out_steer: True
+out_thr_brk: False
+stochastic_steering: True
+
+# crop (capture) area from a camera image
+# - gazebo simulated camera resolution: 800x800
+image_crop_x1: 0 #0
+image_crop_y1: 380 #380   # 373
+image_crop_x2: 800 #800
+#image_crop_y2: 530   # 516
+image_crop_y2: 520 #520
+
+
+# Check the dataset after cropping images 
+check_datasets: True
+collect_datasets: False
+debug: False
+
+# input image size to the neural network
+input_image_width: 200 # 800 # 160
+input_image_height: 200 #140 # 160
+input_image_depth: 3
+
+# input steering angle size to the neural network
+input_steering_shape: 1
+
+# steering data preprocessing
+# - steering angle adjustment
+steering_angle_scale: 1.0
+# - steering wheel jitter tolerance
+steering_angle_jitter_tolerance: 0.01
+
+batch_size: 16
+num_inputs: 2     # input: image, velocity, yaw, heading, prev_steering
+num_outputs: 2    # output: reconstructed image, steering angle, thr_brk
+
+
+######################################################
+## neural networks (generator, descriminator) 
+
+# Generator Type ('UNet' or 'Attention_UNet' or 'Attention_ResUNet')
+# generator_type: 'UNet'
+
+# # network structure
+# num_filters: 64 # number of filters for the first layer
+# filter_size: 4 # size of the convolutional filter
+# up_samp_size: 2 # size of upsampling filters
+# stride: 2
+# # batch_norm: True
+# dropout_rate: 0.3
+latent_dim: 20
+
+# learning rate
+# lr:  0.0002 # default of Adam is 0.001 
+# beta: 0.5
+
+# # other parameters
+# stddev: 0.02
+# alpha: 0.2
+# loss_weights_d: 0.5
+# loss_weights_gan_1: 1
+# loss_weights_gan_2: 100
+
+
+# training 
+# data_shuffle: True
+test_rate: 0.1
+validation_rate: 0.2
+early_stopping_patience: 3
+# tensorboard log dir
+tensorboard_log_dir: logs/
+
+
+
+beta_img: 0.5
+beta_steer: 0.1
+epochs: 50
+recon_loss: 'bce' # 'mse' or 'bce' or 'both'
+steer_loss: 'mse' # 'mse' or 'mae' or 'r_squared'
+lr:  0.001 # default of Adam is 0.001 
+
+
+######################################################
+## driving strategy - run_neural.py
+
+# max vel
+max_vel: 25
+# steering angle value for sharp turn
+sharp_turn_min: 0.25
+# when sharp turn, apply brake for this sec.
+brake_apply_sec: 1.7
+# brake value
+brake_val: 0.5
+# throttle at non sharp turn
+throttle_default: 1.0
+# throttle at sharp turn
+throttle_sharp_turn: 0.1
+# velocity threshold for not moving
+velocity_0: 0.03
+# scale factors
+scale_factor_throttle: 1
+scale_factor_steering: 1
