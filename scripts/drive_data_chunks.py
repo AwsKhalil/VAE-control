@@ -265,50 +265,7 @@ class DriveData:
 
         ############################################ 
         # read out
-        # if (read): 
-        #     num_data = len(self.df)
-            
-        #     bar = ProgressBar()
-            
-        #     for i in bar(range(num_data)): # we don't have a title
-        #     # for i in bar(range(10)):
-        #         self.image_names.append(self.df.loc[i]['image_fname'])
-        #         if Config.data_collection['brake'] is True:
-        #             self.actions.append((float(self.df.loc[i]['steering_angle']),
-        #                                     float(self.df.loc[i]['throttle']), 
-        #                                     float(self.df.loc[i]['brake']),
-        #                                     float(self.df.loc[i]['throttle_brake'])))
-        #         else:
-        #             self.actions.append((float(self.df.loc[i]['steering_angle']),
-        #                                     float(self.df.loc[i]['throttle']), 
-        #                                     0.0)) # dummy value for old data
-        #         self.linux_times.append(float(self.df.loc[i]['linux_time']))
-        #         self.velocities.append(float(self.df.loc[i]['vel']))
-        #         self.velocities_xyz.append((float(self.df.loc[i]['vel_x']), 
-        #                                     float(self.df.loc[i]['vel_y']), 
-        #                                     float(self.df.loc[i]['vel_z'])))
-        #         self.positions_xyz.append((float(self.df.loc[i]['pos_x']), 
-        #                                     float(self.df.loc[i]['pos_y']), 
-        #                                     float(self.df.loc[i]['pos_z'])))
-        #         self.imu_accelerations_xyz.append((float(self.df.loc[i]['imu_accel_x']), 
-        #                                     float(self.df.loc[i]['imu_accel_y']), 
-        #                                     float(self.df.loc[i]['imu_accel_z'])))
-        #         if Config.data_collection['heading_avail'] is True:
-        #             self.yaw_rates_and_headings.append((float(self.df.loc[i]['yaw_rate_deg']), 
-        #                                         float(self.df.loc[i]['heading_current'])))
-        #         self.calculated_accelerations.append(float(self.df.loc[i]['accel_calc']))
-        #         self.time_stamps.append(float(self.df.loc[i]['timestamp']))
         
-        # Vectorized Operations:
-        # Replace loops with vectorized operations where 
-        # possible (e.g., column operations using pandas).
-        # Optimize Progress Tracking: 
-        # Instead of updating the progress bar in a loop (which is slow), 
-        # use batch progress updates.
-        # Efficient Data Assignment: 
-        # Use tolist() or values.tolist() to quickly extract 
-        # data into lists for attributes.
-
         # Populate class attributes if `read` is True
         if read:
             print("\nPopulating data attributes...")
