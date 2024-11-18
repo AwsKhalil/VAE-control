@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from drive_data_new_oscar import DriveData
+from drive_data_chuncks import DriveData
 import gpu_options
 import yaml
 from tqdm import tqdm
