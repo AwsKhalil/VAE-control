@@ -119,16 +119,6 @@ class DriveData:
         chunksize = 10000  # Adjust this based on available memory
         chunks = []
 
-        # self.df = pd.read_csv(self.csv_fname, names=self.csv_header, index_col=False)
-        # if Config.neural_net['accel']:
-        #     self.df['vel'] = (self.df['vel']-self.df['vel'].min())/(self.df['vel'].max()-self.df['vel'].min())
-        #     self.df['accel'] = (self.df['accel']-self.df['accel'].min())/(self.df['accel'].max()-self.df['accel'].min())
-        #self.fname = fname
-        
-        # add a new colum which would have both throttle and brake values 
-        # if Config.data_collection['brake'] is True:
-        #     self.df['throttle_brake'] = self.df['throttle'] - self.df['brake']
-
         # Read the CSV file in chunks
         for chunk in pd.read_csv(self.csv_fname, names=self.csv_header, 
                                  dtype=dtypes, chunksize=chunksize, index_col=False):
@@ -184,23 +174,6 @@ class DriveData:
 
                 ax4.bar(center_throttle_brake, hist_throttle_brake, width=0.05)
                 ax4.set(title='original - throttle_brake')
-
-                # for hist, bins, action_col in zip([hist_steer, hist_throttle, hist_brake],
-                #                                 [bins_steer, bins_throttle, bins_brake],
-                #                                 ['steering_angle', 'throttle', 'brake']):
-                #     for j in range(num_bins):
-                #         list_ = []
-                #         for i in range(len(self.df[action_col])):
-                #             # Check if all three actions are in the zero bin
-                #             if all(bins[j] <= self.df.loc[i, col] <= bins[j + 1] for col in ['steering_angle', 'throttle', 'brake']):
-                #                 list_.append(i)
-                #             # Check if brake is zero and either steering or throttle is zero
-                #             # elif bins[j] <= self.df.loc[i, 'brake'] <= bins[j + 1] and any(
-                #             #         bins[j] <= self.df.loc[i, col] <= bins[j + 1] for col in ['steering_angle', 'throttle']):
-                #             #     list_.append(i)
-                #         random.shuffle(list_)
-                #         list_ = list_[samples_per_bin:]
-                #         remove_list.extend(list_)
 
                 for hist, bins, action_col in zip([hist_steer, hist_throttle_brake],
                                                 [bins_steer, bins_throttle_brake],
